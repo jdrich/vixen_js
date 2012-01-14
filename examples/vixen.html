@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>comet test</title>
+        <script type="text/javascript" src="comet.js"></script>
+        <script type="text/javascript">
+            var my_location = 'comet.php';
+
+            var my_callback = function ( data ) {
+                var content = document.getElementById('content');
+
+                content.innerHTML = data;
+            }
+
+            Vixen.init(my_location, my_callback, 500);
+
+            //Vixen.destroy( my_location );
+
+            var send = function () {
+                Vixen.signal('vixen.php', JSON.stringify(document.getElementById('send').value));
+            }
+        </script>
+        <style type="text/css">
+            div { margin: 10px auto; width: 960px; height: 300px; overflow: hidden; border: 2px dashed #0f0; }
+            textarea { height: 100%; width: 100%; }
+        </style>
+    </head>
+    <body>
+        <div id="content">
+        </div>
+        <div id="debug">
+            <textarea id="send"></textarea>
+        </div>
+        <button onclick="send()">Send</button>
+    </body>
+</html>
