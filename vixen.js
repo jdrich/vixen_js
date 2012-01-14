@@ -1,46 +1,18 @@
 /**
- * Vixen JavaScript Libary v0.9
+ * Vixen JavaScript Libary v1.0 <https://jdrich@github.com/jdrich/vixen_js.git>
  *
- * This libary relies on some assumed functionality about the jsonp endpoint:
- *
- * - The endpoint accepts a parameter specified by param (or 'jsonp') with the
- *   callback information for the poll.
- *
- * - The endpoint will return JavaScript that calls the defined callback.
- *
- * For signallers:
- *
- * - The endpoint does not produce meaningful output. To be unixy, signal
- *   transmissions are one-way.
- *
- * Unfortunately, because of scoping issues it is impossible for the endpoint to
- * be static - doing so would inevitably cause collisions on the JavaScript side
- * with variable names.
- *
- * Usage:
- *
- *   Polling
- *
- *   Vixen.init('some_page.php', function () {}, 500, 'callback')
- *
- *   Signalling
- *
- *   Vixen.signal('some_page.php', JSON.stringify(data), 'url_param');
- *
- * Copyright 2011, Jonathan Rich
- * Dual licensed under the MIT or GPL Version 2 licenses.
+ * Copyright 2011, Jonathan Rich <jdrich@gmail.com>
+ * Licensed under the MIT license.
  */
 var Vixen = (function() {
 
     /**
-     * This gets prefixed to any <script> tags we create to (attempt to) ensure
-     * unique DOM IDs.
+     * Prefixed to any <script> tags we create to (attempt to) ensure unique DOM IDs.
      */
     var script_id_prefix = 'vixen';
 
     /**
-     * An associative array of callback functions specified by registered
-     * pollers, indexed by event ID.
+     * An associative array of callback functions specified by registered pollers, indexed by event ID.
      */
     var callbacks = {};
 
@@ -61,14 +33,14 @@ var Vixen = (function() {
      * Timeout defaults to 2 seconds.
      * Param defaults to 'jsonp'
      */
-    var init = function( location, callback, timeout, param ) {
+    var init = function(location, callback, timeout, param) {
 
         // Set defaults.
         param = param ? param : 'jsonp';
         timeout = timeout ? timeout : 2000;
 
         // Initialize our handler.
-        var id = getScriptTagID( handlers );
+        var id = getScriptTagID(handlers);
         var handler = handlers[location] = {};
 
         callbacks[id] = callback;
@@ -78,7 +50,7 @@ var Vixen = (function() {
         handler.callback = callback;
         handler.timeout = timeout;
         handler.param = param;
-        handler.interval = setInterval( function() { poll(location) }, timeout );
+        handler.interval = setInterval(function() { poll(location) }, timeout);
 
         // Make the first request now.
         poll(location);
@@ -87,10 +59,12 @@ var Vixen = (function() {
     /**
      * Destroys the poller, if it exists, for the file handler at location.
      */
-    var destroy = function ( location ) {
-        if( handlers[location] ) {
+    var destroy = function (location) {
+        if (handlers[location]) {
             var handler = handlers[location];
+            
             clearInterval(handler.interval);
+            
             delete handlers[location];
             delete callbacks[handler.id];
         }
@@ -101,7 +75,7 @@ var Vixen = (function() {
      *
      * @todo Make this more generalized.
      */
-    var getScriptTagID = function ( collisions )  {
+    var getScriptTagID = function (collisions)  {
         var id = script_id_prefix + '_';
 
         id += Math.random().toString().match(/[^\.]+$/);
@@ -120,7 +94,7 @@ var Vixen = (function() {
     /**
      * Polls the specified location based on the predefined poll handler.
      */
-    var poll = function ( location ) {
+    var poll = function (location) {
         var handler = handlers[location];
 
         var head = document.getElementsByTagName('head')[0];
@@ -138,8 +112,8 @@ var Vixen = (function() {
         head.appendChild(script);
     };
 
-    var signal = function ( location, data, param ) {
-        if ( typeof signals[location] == 'undefined' ) {
+    var signal = function (location, data, param) {
+        if (typeof signals[location] == 'undefined') {
             signals[location] = getScriptTagID(signals);
         }
 
