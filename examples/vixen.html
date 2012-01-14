@@ -3,7 +3,7 @@
         <title>Vixen JS Test</title>
         <script type="text/javascript" src="../vixen.js"></script>
         <script type="text/javascript">
-            var vixen_location = 'poll.txt';
+            var vixen_location = 'poll.php';
 
             var vixen_callback = function (data) {
                 console.log(data);
@@ -12,7 +12,7 @@
             Vixen.init(vixen_location, vixen_callback);
 
             var send = function () {
-                Vixen.signal('signal.txt', JSON.stringify('Hello, world!'));
+                Vixen.signal('signal.php', JSON.stringify('Hello, world!'));
             }
             
             var destroy = function () {
