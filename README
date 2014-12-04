@@ -1,15 +1,13 @@
 Vixen JS JSONP Library <https://jdrich@github.com/jdrich/vixen_js.git>
 
-About
------
+## About
 
 The Vixen JS JSONP Library is an open source (MIT licensed) library for use in
-applications which require poll and signal typed functionality within JavaScript
+applications which require poll and signal type functionality within JavaScript
 applications. The library is simple, short, and concise, and aims to stay that
 way.
 
-Uses
-----
+## Uses
 
 Polling
 
@@ -40,24 +38,20 @@ var message = JSON.stringify('example');
 
 Vixen.signal(signalled_location, message);
     
-Purpose
--------
+## Purpose
 
 Vixen is a small library that duplicates JSONP functionality in a minimal way.
 Its purpose is to facilitate the implementation of JSONP APIs. The purpose of
 Vixen is not to replace Ajax calls, and it should not be abused for that purpose.
         
-Author
-------
+## Author
 
 Jonathan Rich <jdrich@gmail.com>
         
-Feedback
---------
+## Feedback
 
 Submit bugs to https://github.com/jdrich/vixen_js/issues.
 
-License
--------
+## License
 
 Please see the file called LICENSE.
